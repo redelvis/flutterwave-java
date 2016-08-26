@@ -32,7 +32,7 @@ public class GetPaidCardsExample {
         request = new MVVARequest();
         request.setAmount("1000.00");
         request.setAuthmodel("NOAUTH");
-        request.setCardno("0namBqxokWHu5nY6w5fQjes02enuA0u");
+        request.setCardno("5060990580000217499");
         request.setCountry("NG");
         request.setCurrency("NGN");
         request.setCustid("examplesspc");
