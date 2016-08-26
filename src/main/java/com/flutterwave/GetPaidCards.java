@@ -39,6 +39,7 @@ public class GetPaidCards {
         this.apiKey = apiKey;
         this.merchantId = merchantId;
         this.baseUrl = baseUrl;
+        hardner = new RequestHardner();
     }
 
     public MVVAResponse payWithCardDetails(MVVARequest request) throws InvalidRequestObjectException, BadPaddingException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, IOException, URISyntaxException {

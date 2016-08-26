@@ -32,7 +32,7 @@ public class GetPaidCardsExample {
         request = new MVVARequest();
         request.setAmount("1000.00");
         request.setAuthmodel("NOAUTH");
-        request.setCardno("");
+        request.setCardno("0namBqxokWHu5nY6w5fQjes02enuA0u");
         request.setCountry("NG");
         request.setCurrency("NGN");
         request.setCustid("examplesspc");
@@ -40,7 +40,6 @@ public class GetPaidCardsExample {
         request.setExpiryyear("18");
         request.setMerchantid("lZBBPwc3kM");
         request.setNarration("A test payment");
-        request.setCvv("354");
         request.setCvv("354");
 
         try {
@@ -51,7 +50,9 @@ public class GetPaidCardsExample {
         } catch (EmptyKeyException | InvalidRequestObjectException | BadPaddingException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | IOException | URISyntaxException ex) {
             Logger.getLogger(GetPaidCardsExample.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
+    public static void main(String[] args) {
+        new GetPaidCardsExample();
+    }
 }

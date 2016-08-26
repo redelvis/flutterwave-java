@@ -5,6 +5,7 @@
  */
 package com.flutterwave.util;
 
+import com.flutterwave.examples.GetPaidCardsExample;
 import com.flutterwave.requests.AccountRequest;
 import com.flutterwave.requests.MVVARequest;
 import com.flutterwave.response.AccountResponse;
@@ -12,6 +13,8 @@ import com.flutterwave.response.MVVAResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -48,14 +51,18 @@ public class Gateway {
         requestJSON.putOpt("narration", request.getNarration());
         requestJSON.putOpt("responseurl", request.getResponseurl());
 
+        Logger.getLogger(Gateway.class.getName()).log(Level.INFO, requestJSON.toString());
+        
         HttpClient client = HttpClientBuilder.create().build();
         URIBuilder builder = new URIBuilder(url);
         HttpPost post = new HttpPost(builder.build());
+        post.setHeader("Content-Type", "application/json");
         post.setEntity(new StringEntity(requestJSON.toString()));
         HttpResponse httpResponse = client.execute(post);
         HttpEntity responseEntity = httpResponse.getEntity();
         if (responseEntity != null) {
             String output = EntityUtils.toString(responseEntity);
+            Logger.getLogger(Gateway.class.getName()).log(Level.INFO, output);
             JSONObject details = new JSONObject(output);
             MVVAResponse response = Util.makeMVVAResponse(details);
             return response;
