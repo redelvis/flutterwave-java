@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.flutterwave.util;
 
 import java.io.UnsupportedEncodingException;
@@ -24,7 +19,7 @@ import org.apache.commons.codec.binary.Base64;
  */
 public class TripleDES {
 
-    String key;
+    private String key;
 
     public TripleDES(String myEncryptionKey) {
         key = myEncryptionKey;
@@ -93,14 +88,12 @@ public class TripleDES {
         }
 
         SecretKey secretKey = new SecretKeySpec(keyBytes, "DESede");
-
         Cipher decipher = Cipher.getInstance("DESede/ECB/PKCS5Padding");
         decipher.init(Cipher.DECRYPT_MODE, secretKey);
 
         byte[] plainText = decipher.doFinal(message);
 
         return new String(plainText, "UTF-8");
-
     }
 
 }

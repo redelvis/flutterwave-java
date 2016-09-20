@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.flutterwave.util;
 
 import com.flutterwave.requests.AccountRequest;
@@ -20,7 +15,7 @@ import javax.crypto.NoSuchPaddingException;
  */
 public class RequestHardner {
 
-    TripleDES tripleDes;
+    private TripleDES tripleDes;
 
     public MVVARequest MVVACardAPIHardner(MVVARequest mo, String key) throws BadPaddingException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException {
         MVVARequest mvo = new MVVARequest();
@@ -52,7 +47,6 @@ public class RequestHardner {
     }
 
     public AccountRequest accountAPIHardner(AccountRequest rcr, String key)throws BadPaddingException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException {
-
         AccountRequest ro = new AccountRequest();
         tripleDes = new TripleDES(key);
         
