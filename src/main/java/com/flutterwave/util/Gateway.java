@@ -45,24 +45,9 @@ public class Gateway {
         requestJSON.putOpt("narration", request.getNarration());
         requestJSON.putOpt("responseurl", request.getResponseurl());
 
-        logger.log(Level.INFO, requestJSON.toString());
-        
-        HttpClient client = HttpClientBuilder.create().build();
-        URIBuilder builder = new URIBuilder(url);
-        HttpPost post = new HttpPost(builder.build());
-        post.setHeader("Content-Type", "application/json");
-        post.setEntity(new StringEntity(requestJSON.toString()));
-        HttpResponse httpResponse = client.execute(post);
-        HttpEntity responseEntity = httpResponse.getEntity();
-        if (responseEntity != null) {
-            String output = EntityUtils.toString(responseEntity);
-            logger.log(Level.INFO, output);
-            JSONObject details = new JSONObject(output);
-            MVVAResponse response = Util.makeMVVAResponse(details);
-            return response;
-        } else {
-            return null;
-        }
+        JSONObject details = sendRequest(url, requestJSON);
+        MVVAResponse response = details != null ? Util.makeMVVAResponse(details) : null;
+        return response;
     }
 
     public static MVVAResponse sendMT(MVVARequest request, String merchantId, String baseUrl) throws URISyntaxException, IOException, JSONException {
@@ -77,22 +62,9 @@ public class Gateway {
         requestJSON.putOpt("chargetoken", request.getChargetoken());
         requestJSON.putOpt("merchantid", merchantId);
 
-        HttpClient client = HttpClientBuilder.create().build();
-        URIBuilder builder = new URIBuilder(url);
-        HttpPost post = new HttpPost(builder.build());
-        post.setHeader("Content-Type", "application/json");
-        post.setEntity(new StringEntity(requestJSON.toString()));
-        HttpResponse httpResponse = client.execute(post);
-        HttpEntity responseEntity = httpResponse.getEntity();
-        if (responseEntity != null) {
-            String output = EntityUtils.toString(responseEntity);
-            logger.log(Level.INFO, output);
-            JSONObject details = new JSONObject(output);
-            MVVAResponse response = Util.makeMVVAResponse(details);
-            return response;
-        } else {
-            return null;
-        }
+        JSONObject details = sendRequest(url, requestJSON);
+        MVVAResponse response = details != null ? Util.makeMVVAResponse(details) : null;
+        return response;
     }
 
     public static MVVAResponse sendVT(MVVARequest request, String merchantId, String baseUrl) throws URISyntaxException, IOException, JSONException {
@@ -104,22 +76,9 @@ public class Gateway {
         requestJSON.putOpt("cardtype", request.getCardtype());
         requestJSON.putOpt("merchantid", merchantId);
 
-        HttpClient client = HttpClientBuilder.create().build();
-        URIBuilder builder = new URIBuilder(url);
-        HttpPost post = new HttpPost(builder.build());
-        post.setHeader("Content-Type", "application/json");
-        post.setEntity(new StringEntity(requestJSON.toString()));
-        HttpResponse httpResponse = client.execute(post);
-        HttpEntity responseEntity = httpResponse.getEntity();
-        if (responseEntity != null) {
-            String output = EntityUtils.toString(responseEntity);
-            logger.log(Level.INFO, output);
-            JSONObject details = new JSONObject(output);
-            MVVAResponse response = Util.makeMVVAResponse(details);
-            return response;
-        } else {
-            return null;
-        }
+        JSONObject details = sendRequest(url, requestJSON);
+        MVVAResponse response = details != null ? Util.makeMVVAResponse(details) : null;
+        return response;
     }
 
     public static AccountResponse sendAccountInitiate(AccountRequest request, String merchantId, String baseUrl) throws URISyntaxException, IOException, JSONException {
@@ -128,22 +87,9 @@ public class Gateway {
         requestJSON.putOpt("accountNumber", request.getAccountNumber());
         requestJSON.putOpt("merchantid", merchantId);
 
-        HttpClient client = HttpClientBuilder.create().build();
-        URIBuilder builder = new URIBuilder(url);
-        HttpPost post = new HttpPost(builder.build());
-        post.setHeader("Content-Type", "application/json");
-        post.setEntity(new StringEntity(requestJSON.toString()));
-        HttpResponse httpResponse = client.execute(post);
-        HttpEntity responseEntity = httpResponse.getEntity();
-        if (responseEntity != null) {
-            String output = EntityUtils.toString(responseEntity);
-            logger.log(Level.INFO, output);
-            JSONObject details = new JSONObject(output);
-            AccountResponse response = Util.makeAccountResponse(details);
-            return response;
-        } else {
-            return null;
-        }
+        JSONObject details = sendRequest(url, requestJSON);
+        AccountResponse response = details != null ? Util.makeAccountResponse(details) : null;
+        return response;
     }
 
     public static AccountResponse sendAccountValidate(AccountRequest request, String merchantId, String baseUrl) throws URISyntaxException, IOException, JSONException {
@@ -156,22 +102,9 @@ public class Gateway {
         requestJSON.putOpt("debitnarration", request.getDebitNarration());
         requestJSON.putOpt("merchantid", merchantId);
 
-        HttpClient client = HttpClientBuilder.create().build();
-        URIBuilder builder = new URIBuilder(url);
-        HttpPost post = new HttpPost(builder.build());
-        post.setHeader("Content-Type", "application/json");
-        post.setEntity(new StringEntity(requestJSON.toString()));
-        HttpResponse httpResponse = client.execute(post);
-        HttpEntity responseEntity = httpResponse.getEntity();
-        if (responseEntity != null) {
-            String output = EntityUtils.toString(responseEntity);
-            logger.log(Level.INFO, output);
-            JSONObject details = new JSONObject(output);
-            AccountResponse response = Util.makeAccountResponse(details);
-            return response;
-        } else {
-            return null;
-        }
+        JSONObject details = sendRequest(url, requestJSON);
+        AccountResponse response = details != null ? Util.makeAccountResponse(details) : null;
+        return response;
     }
 
     public static AccountResponse sendAccountCharge(AccountRequest request, String merchantId, String baseUrl) throws URISyntaxException, IOException, JSONException {
@@ -182,6 +115,13 @@ public class Gateway {
         requestJSON.putOpt("debitnarration", request.getDebitNarration());
         requestJSON.putOpt("merchantid", merchantId);
 
+        JSONObject details = sendRequest(url, requestJSON);
+        AccountResponse response = details != null ? Util.makeAccountResponse(details) : null;
+        return response;
+    }
+
+    private static JSONObject sendRequest(String url, JSONObject requestJSON) throws URISyntaxException, IOException {
+        logger.log(Level.INFO, requestJSON.toString());
         HttpClient client = HttpClientBuilder.create().build();
         URIBuilder builder = new URIBuilder(url);
         HttpPost post = new HttpPost(builder.build());
@@ -193,8 +133,7 @@ public class Gateway {
             String output = EntityUtils.toString(responseEntity);
             logger.log(Level.INFO, output);
             JSONObject details = new JSONObject(output);
-            AccountResponse response = Util.makeAccountResponse(details);
-            return response;
+            return details;
         } else {
             return null;
         }
