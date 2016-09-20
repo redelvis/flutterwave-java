@@ -25,11 +25,10 @@ import javax.crypto.NoSuchPaddingException;
  * @author josepholaoye
  */
 public class GetPaidCardsExample {
-
-    MVVARequest request;
+    private static final Logger logger = Logger.getLogger(GetPaidCardsExample.class.getName());
 
     public GetPaidCardsExample() {
-        request = new MVVARequest();
+        MVVARequest request = new MVVARequest();
         request.setAmount("1000.00");
         request.setAuthmodel("NOAUTH");
         request.setCardno("5060990580000217499");
@@ -48,7 +47,7 @@ public class GetPaidCardsExample {
             String responseCode = payWithCardDetails.getResponseCode();
             Logger.getLogger(GetPaidCardsExample.class.getName()).log(Level.INFO, responseCode);
         } catch (EmptyKeyException | InvalidRequestObjectException | BadPaddingException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | IOException | URISyntaxException ex) {
-            Logger.getLogger(GetPaidCardsExample.class.getName()).log(Level.SEVERE, null, ex);
+            logger.log(Level.SEVERE, null, ex);
         }
     }
 
