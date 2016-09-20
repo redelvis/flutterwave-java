@@ -45,7 +45,7 @@ public class GetPaidCardsExample {
             GetPaidCards getPaidCards = new GetPaidCards("OqjBHslUGvv6wSViNCCB", "lZBBPwc3kM", "http://staging1flutterwave.co:8080");
             MVVAResponse payWithCardDetails = getPaidCards.payWithCardDetails(request);
             String responseCode = payWithCardDetails.getResponseCode();
-            Logger.getLogger(GetPaidCardsExample.class.getName()).log(Level.INFO, responseCode);
+            logger.log(Level.INFO, responseCode);
         } catch (EmptyKeyException | InvalidRequestObjectException | BadPaddingException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | IOException | URISyntaxException ex) {
             logger.log(Level.SEVERE, null, ex);
         }
