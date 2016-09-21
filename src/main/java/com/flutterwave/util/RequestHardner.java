@@ -50,12 +50,12 @@ public class RequestHardner {
         AccountRequest ro = new AccountRequest();
         tripleDes = new TripleDES(key);
         
-        ro.setAccountNumber(tripleDes.soften(rcr.getAccountNumber()));
-        ro.setAccountToken(tripleDes.soften(rcr.getAccountToken()));
-        ro.setBillingAmount(tripleDes.soften(rcr.getBillingAmount()));
-        ro.setDebitNarration(tripleDes.soften(rcr.getDebitNarration()));
-        ro.setOtp(tripleDes.soften(rcr.getOtp()));
-        ro.setReference(tripleDes.soften(rcr.getReference()));
+        ro.setAccountNumber(tripleDes.harden(rcr.getAccountNumber()));
+        ro.setAccountToken(tripleDes.harden(rcr.getAccountToken()));
+        ro.setBillingAmount(tripleDes.harden(rcr.getBillingAmount()));
+        ro.setDebitNarration(tripleDes.harden(rcr.getDebitNarration()));
+        ro.setOtp(tripleDes.harden(rcr.getOtp()));
+        ro.setReference(tripleDes.harden(rcr.getReference()));
 
         return ro;
     }
