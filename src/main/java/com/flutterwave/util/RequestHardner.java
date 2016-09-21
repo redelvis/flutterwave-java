@@ -15,11 +15,14 @@ import javax.crypto.NoSuchPaddingException;
  */
 public class RequestHardner {
 
-    private TripleDES tripleDes;
+    private final TripleDES tripleDes;
 
-    public MVVARequest MVVACardAPIHardner(MVVARequest mo, String key) throws BadPaddingException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException {
+    public RequestHardner(String apiKey) {
+        tripleDes = new TripleDES(apiKey);
+    }
+
+    public MVVARequest MVVACardAPIHardner(MVVARequest mo) throws BadPaddingException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException {
         MVVARequest mvo = new MVVARequest();
-        tripleDes = new TripleDES(key);
 
         mvo.setCardno(tripleDes.harden(mo.getCardno()));
         mvo.setAmount(tripleDes.harden(mo.getAmount()));
@@ -46,10 +49,9 @@ public class RequestHardner {
 
     }
 
-    public AccountRequest accountAPIHardner(AccountRequest rcr, String key)throws BadPaddingException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException {
+    public AccountRequest accountAPIHardner(AccountRequest rcr)throws BadPaddingException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException {
         AccountRequest ro = new AccountRequest();
-        tripleDes = new TripleDES(key);
-        
+
         ro.setAccountNumber(tripleDes.harden(rcr.getAccountNumber()));
         ro.setAccountToken(tripleDes.harden(rcr.getAccountToken()));
         ro.setBillingAmount(tripleDes.harden(rcr.getBillingAmount()));
