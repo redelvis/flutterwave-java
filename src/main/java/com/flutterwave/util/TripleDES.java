@@ -26,16 +26,7 @@ public class TripleDES {
     }
 
     /**
-     * Method To Encrypt The String
-     *
-     * @param unencryptedString
-     * @return encrpted string
-     * @throws java.security.NoSuchAlgorithmException
-     * @throws java.io.UnsupportedEncodingException
-     * @throws javax.crypto.NoSuchPaddingException
-     * @throws java.security.InvalidKeyException
-     * @throws javax.crypto.IllegalBlockSizeException
-     * @throws javax.crypto.BadPaddingException
+     * Method to encrypt the string
      */
     public String harden(String unencryptedString) throws NoSuchAlgorithmException, UnsupportedEncodingException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
         if (unencryptedString == null) {
@@ -55,23 +46,15 @@ public class TripleDES {
 
         byte[] plainTextBytes = unencryptedString.getBytes("utf-8");
         byte[] buf = cipher.doFinal(plainTextBytes);
-        byte[] base64Bytes = Base64.encodeBase64(buf);
-        String base64EncryptedString = new String(base64Bytes);
+        String base64EncryptedString = Base64.encodeBase64String(buf);
 
         return base64EncryptedString;
     }
 
     /**
-     * Method To Decrypt An Ecrypted String
+     * Method to decrypt an encrypted string
      *
      * @param encryptedString
-     * @return
-     * @throws java.io.UnsupportedEncodingException
-     * @throws java.security.NoSuchAlgorithmException
-     * @throws javax.crypto.NoSuchPaddingException
-     * @throws java.security.InvalidKeyException
-     * @throws javax.crypto.IllegalBlockSizeException
-     * @throws javax.crypto.BadPaddingException
      */
     public String soften(String encryptedString) throws UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
         if (encryptedString == null) {
