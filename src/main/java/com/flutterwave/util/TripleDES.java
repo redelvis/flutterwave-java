@@ -13,10 +13,10 @@ import java.util.logging.Logger;
 public class TripleDES {
     private static final Logger logger = Logger.getLogger(TripleDES.class.getName());
 
-    private String key;
+    private String encryptionKey;
 
-    public TripleDES(String myEncryptionKey) {
-        key = myEncryptionKey;
+    public TripleDES(String encryptionKey) {
+        this.encryptionKey = encryptionKey;
     }
 
     /**
@@ -28,7 +28,7 @@ public class TripleDES {
         }
         try {
             MessageDigest md = MessageDigest.getInstance("md5");
-            byte[] digestOfPassword = md.digest(key.getBytes("utf-8"));
+            byte[] digestOfPassword = md.digest(encryptionKey.getBytes("utf-8"));
             byte[] keyBytes = Arrays.copyOf(digestOfPassword, 24);
 
             for (int j = 0, k = 16; j < 8; ) {
@@ -63,7 +63,7 @@ public class TripleDES {
             byte[] message = Base64.decodeBase64(encryptedString.getBytes("utf-8"));
 
             MessageDigest md = MessageDigest.getInstance("MD5");
-            byte[] digestOfPassword = md.digest(key.getBytes("utf-8"));
+            byte[] digestOfPassword = md.digest(encryptionKey.getBytes("utf-8"));
             byte[] keyBytes = Arrays.copyOf(digestOfPassword, 24);
 
             for (int j = 0, k = 16; j < 8; ) {
