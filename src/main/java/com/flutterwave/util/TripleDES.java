@@ -22,7 +22,7 @@ public class TripleDES {
     /**
      * Method to encrypt the string
      */
-    public String harden(String unencryptedString) {
+    public String encrypt(String unencryptedString) {
         if (unencryptedString == null) {
             return "";
         }
@@ -55,7 +55,7 @@ public class TripleDES {
      *
      * @param encryptedString
      */
-    public String soften(String encryptedString) {
+    public String decrypt(String encryptedString) {
         if (encryptedString == null) {
             return "";
         }

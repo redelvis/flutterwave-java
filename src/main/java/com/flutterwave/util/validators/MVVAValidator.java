@@ -1,6 +1,6 @@
 package com.flutterwave.util.validators;
 
-import com.flutterwave.requests.MVVARequest;
+import com.flutterwave.requests.MvvaRequest;
 
 /**
  *
@@ -8,7 +8,7 @@ import com.flutterwave.requests.MVVARequest;
  */
 public class MVVAValidator {
 
-    public static boolean validate(MVVARequest request) {
+    public static boolean validate(MvvaRequest request) {
         if (request == null) {
             return false;
         }

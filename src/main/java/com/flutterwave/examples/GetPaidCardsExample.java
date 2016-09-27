@@ -3,7 +3,7 @@ package com.flutterwave.examples;
 import com.flutterwave.GetPaidCards;
 import com.flutterwave.exceptions.EmptyKeyException;
 import com.flutterwave.exceptions.InvalidRequestObjectException;
-import com.flutterwave.requests.MVVARequest;
+import com.flutterwave.requests.MvvaRequest;
 import com.flutterwave.response.MVVAResponse;
 
 import java.util.logging.Level;
@@ -13,7 +13,7 @@ public class GetPaidCardsExample {
     private static final Logger logger = Logger.getLogger(GetPaidCardsExample.class.getName());
 
     public static void main(String[] args) {
-        MVVARequest request = new MVVARequest();
+        MvvaRequest request = new MvvaRequest();
         request.setAmount("1000.00");
         request.setCurrency("NGN");
         request.setAuthmodel("NOAUTH");

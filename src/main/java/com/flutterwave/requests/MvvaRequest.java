@@ -24,7 +24,7 @@ package com.flutterwave.requests;
  * "responseurl": "(Optional:Only needed where authmodel is VBVSECURECODE) Encrypted Response URL"
  * }
  */
-public class MVVARequest {
+public class MvvaRequest {
     private String amount;
     private String currency;
     private String chargetoken;

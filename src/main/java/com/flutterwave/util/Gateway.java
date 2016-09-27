@@ -1,7 +1,7 @@
 package com.flutterwave.util;
 
 import com.flutterwave.requests.AccountRequest;
-import com.flutterwave.requests.MVVARequest;
+import com.flutterwave.requests.MvvaRequest;
 import com.flutterwave.response.AccountResponse;
 import com.flutterwave.response.MVVAResponse;
 import org.apache.http.HttpEntity;
@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 public class Gateway {
     private static final Logger logger = Logger.getLogger(Gateway.class.getName());
 
-    public static MVVAResponse sendMCD(MVVARequest request, String merchantId, String baseUrl) {
+    public static MVVAResponse sendMCD(MvvaRequest request, String merchantId, String baseUrl) {
         String url = baseUrl.concat("/pwc/rest/card/mvva/pay");
         JSONObject requestJSON = new JSONObject();
         requestJSON.putOpt("amount", request.getAmount());
@@ -44,7 +44,7 @@ public class Gateway {
         return response;
     }
 
-    public static MVVAResponse sendMT(MVVARequest request, String merchantId, String baseUrl) {
+    public static MVVAResponse sendMT(MvvaRequest request, String merchantId, String baseUrl) {
         String url = baseUrl.concat("/pwc/rest/card/mvva/pay");
         JSONObject requestJSON = new JSONObject();
         requestJSON.putOpt("amount", request.getAmount());
@@ -61,7 +61,7 @@ public class Gateway {
         return response;
     }
 
-    public static MVVAResponse sendVT(MVVARequest request, String merchantId, String baseUrl) {
+    public static MVVAResponse sendVT(MvvaRequest request, String merchantId, String baseUrl) {
         String url = baseUrl.concat("/pwc/rest/card/mvva/pay");
         JSONObject requestJSON = new JSONObject();
         requestJSON.putOpt("otp", request.getOtp());
