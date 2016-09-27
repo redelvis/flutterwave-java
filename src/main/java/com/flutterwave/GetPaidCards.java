@@ -12,7 +12,7 @@ public class GetPaidCards {
     private String apiKey;
     private String merchantId;
     private String baseUrl;
-    private RequestEncrypter hardner;
+    private RequestEncrypter requestEncrypter;
 
     public GetPaidCards(String apiKey, String merchantId, String baseUrl) throws EmptyKeyException {
         if (apiKey == null || apiKey.isEmpty() || merchantId == null || merchantId.isEmpty() || baseUrl == null || baseUrl.isEmpty()) {
@@ -21,43 +21,34 @@ public class GetPaidCards {
         this.apiKey = apiKey;
         this.merchantId = merchantId;
         this.baseUrl = baseUrl;
-        hardner = new RequestEncrypter(apiKey);
+        requestEncrypter = new RequestEncrypter(apiKey);
     }
 
     public MVVAResponse payWithCardDetails(MvvaRequest request) throws InvalidRequestObjectException {
-        MVVAResponse response;
-        boolean valid = MVVAValidator.validate(request);
-        if (!valid) {
+        if (!MVVAValidator.validate(request)) {
             throw new InvalidRequestObjectException();
-        } else {
-            request = hardner.encryptMvvaCardRequest(request);
-            response = Gateway.sendMCD(request, merchantId, baseUrl);
-            return response;
         }
+        MvvaRequest encryptedRequest = requestEncrypter.encryptMvvaCardRequest(request);
+        MVVAResponse response = Gateway.sendMCD(encryptedRequest, merchantId, baseUrl);
+        return response;
     }
 
     public MVVAResponse payWithToken(MvvaRequest request) throws InvalidRequestObjectException {
-        MVVAResponse response;
-        boolean valid = MVVAValidator.validate(request);
-        if (!valid) {
+        if (!MVVAValidator.validate(request)) {
             throw new InvalidRequestObjectException();
-        } else {
-            request = hardner.encryptMvvaCardRequest(request);
-            response = Gateway.sendMT(request, merchantId, baseUrl);
-            return response;
         }
+        MvvaRequest encryptedRequest = requestEncrypter.encryptMvvaCardRequest(request);
+        MVVAResponse response = Gateway.sendMT(encryptedRequest, merchantId, baseUrl);
+        return response;
     }
 
     public MVVAResponse validate(MvvaRequest request) throws InvalidRequestObjectException {
-        MVVAResponse response;
-        boolean valid = MVVAValidator.validate(request);
-        if (!valid) {
+        if (!MVVAValidator.validate(request)) {
             throw new InvalidRequestObjectException();
-        } else {
-            request = hardner.encryptMvvaCardRequest(request);
-            response = Gateway.sendVT(request, merchantId, baseUrl);
-            return response;
         }
+        MvvaRequest encryptedRequest = requestEncrypter.encryptMvvaCardRequest(request);
+        MVVAResponse response = Gateway.sendVT(encryptedRequest, merchantId, baseUrl);
+        return response;
     }
 
 }
