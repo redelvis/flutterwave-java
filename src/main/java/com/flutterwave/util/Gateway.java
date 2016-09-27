@@ -20,8 +20,16 @@ import java.util.logging.Logger;
 public class Gateway {
     private static final Logger logger = Logger.getLogger(Gateway.class.getName());
 
-    public static MVVAResponse sendPayWithCardDetailsRequest(MvvaRequest request, String merchantId, String baseUrl) {
-        String url = baseUrl.concat("/pwc/rest/card/mvva/pay");
+    private String merchantId;
+    private String baseUrl;
+
+    public Gateway(String merchantId, String baseUrl) {
+        this.merchantId = merchantId;
+        this.baseUrl = baseUrl;
+    }
+
+    public MVVAResponse sendPayWithCardDetailsRequest(MvvaRequest request) {
+        String url = this.baseUrl.concat("/pwc/rest/card/mvva/pay");
         JSONObject requestJSON = new JSONObject();
         requestJSON.putOpt("amount", request.getAmount());
         requestJSON.putOpt("authmodel", request.getAuthmodel());
@@ -35,7 +43,7 @@ public class Gateway {
         requestJSON.putOpt("cardtype", request.getCardtype());
         requestJSON.putOpt("expirymonth", request.getExpirymonth());
         requestJSON.putOpt("expiryyear", request.getExpiryyear());
-        requestJSON.putOpt("merchantid", merchantId);
+        requestJSON.putOpt("merchantid", this.merchantId);
         requestJSON.putOpt("narration", request.getNarration());
         requestJSON.putOpt("responseurl", request.getResponseurl());
 
@@ -44,8 +52,8 @@ public class Gateway {
         return response;
     }
 
-    public static MVVAResponse sendPayWithTokenRequest(MvvaRequest request, String merchantId, String baseUrl) {
-        String url = baseUrl.concat("/pwc/rest/card/mvva/pay");
+    public MVVAResponse sendPayWithTokenRequest(MvvaRequest request) {
+        String url = this.baseUrl.concat("/pwc/rest/card/mvva/pay");
         JSONObject requestJSON = new JSONObject();
         requestJSON.putOpt("amount", request.getAmount());
         requestJSON.putOpt("currency", request.getCurrency());
@@ -54,67 +62,67 @@ public class Gateway {
         requestJSON.putOpt("cardtype", request.getCardtype());
         requestJSON.putOpt("narration", request.getNarration());
         requestJSON.putOpt("chargetoken", request.getChargetoken());
-        requestJSON.putOpt("merchantid", merchantId);
+        requestJSON.putOpt("merchantid", this.merchantId);
 
         JSONObject details = sendRequest(url, requestJSON);
         MVVAResponse response = details != null ? Util.makeMVVAResponse(details) : null;
         return response;
     }
 
-    public static MVVAResponse sendValidateRequest(MvvaRequest request, String merchantId, String baseUrl) {
-        String url = baseUrl.concat("/pwc/rest/card/mvva/pay");
+    public MVVAResponse sendValidateRequest(MvvaRequest request) {
+        String url = this.baseUrl.concat("/pwc/rest/card/mvva/pay");
         JSONObject requestJSON = new JSONObject();
         requestJSON.putOpt("otp", request.getOtp());
         requestJSON.putOpt("otptransactionidentifier", request.getOtptransactionidentifier());
         requestJSON.putOpt("country", request.getCountry());
         requestJSON.putOpt("cardtype", request.getCardtype());
-        requestJSON.putOpt("merchantid", merchantId);
+        requestJSON.putOpt("merchantid", this.merchantId);
 
         JSONObject details = sendRequest(url, requestJSON);
         MVVAResponse response = details != null ? Util.makeMVVAResponse(details) : null;
         return response;
     }
 
-    public static AccountResponse sendAccountInitiate(AccountRequest request, String merchantId, String baseUrl) {
-        String url = baseUrl.concat("/pwc/rest/recurrent/account");
+    public AccountResponse sendAccountInitiate(AccountRequest request) {
+        String url = this.baseUrl.concat("/pwc/rest/recurrent/account");
         JSONObject requestJSON = new JSONObject();
         requestJSON.putOpt("accountNumber", request.getAccountNumber());
-        requestJSON.putOpt("merchantid", merchantId);
+        requestJSON.putOpt("merchantid", this.merchantId);
 
         JSONObject details = sendRequest(url, requestJSON);
         AccountResponse response = details != null ? Util.makeAccountResponse(details) : null;
         return response;
     }
 
-    public static AccountResponse sendAccountValidate(AccountRequest request, String merchantId, String baseUrl) {
-        String url = baseUrl.concat("/pwc/rest/recurrent/account/validate");
+    public AccountResponse sendAccountValidate(AccountRequest request) {
+        String url = this.baseUrl.concat("/pwc/rest/recurrent/account/validate");
         JSONObject requestJSON = new JSONObject();
         requestJSON.putOpt("accountNumber", request.getAccountNumber());
         requestJSON.putOpt("otp", request.getOtp());
         requestJSON.putOpt("reference", request.getReference());
         requestJSON.putOpt("billingamount", request.getBillingAmount());
         requestJSON.putOpt("debitnarration", request.getDebitNarration());
-        requestJSON.putOpt("merchantid", merchantId);
+        requestJSON.putOpt("merchantid", this.merchantId);
 
         JSONObject details = sendRequest(url, requestJSON);
         AccountResponse response = details != null ? Util.makeAccountResponse(details) : null;
         return response;
     }
 
-    public static AccountResponse sendAccountCharge(AccountRequest request, String merchantId, String baseUrl) {
-        String url = baseUrl.concat("/pwc/rest/recurrent/account/charge");
+    public AccountResponse sendAccountCharge(AccountRequest request) {
+        String url = this.baseUrl.concat("/pwc/rest/recurrent/account/charge");
         JSONObject requestJSON = new JSONObject();
         requestJSON.putOpt("accountToken", request.getAccountNumber());
         requestJSON.putOpt("billingamount", request.getBillingAmount());
         requestJSON.putOpt("debitnarration", request.getDebitNarration());
-        requestJSON.putOpt("merchantid", merchantId);
+        requestJSON.putOpt("merchantid", this.merchantId);
 
         JSONObject details = sendRequest(url, requestJSON);
         AccountResponse response = details != null ? Util.makeAccountResponse(details) : null;
         return response;
     }
 
-    private static JSONObject sendRequest(String url, JSONObject requestJSON) {
+    private JSONObject sendRequest(String url, JSONObject requestJSON) {
         try {
             logger.log(Level.INFO, requestJSON.toString());
             HttpClient client = HttpClientBuilder.create().build();

@@ -14,6 +14,7 @@ public class GetPaidAccounts {
     private String merchantId;
     private String baseUrl;
     private RequestEncrypter hardner;
+    private Gateway gateway;
 
     public GetPaidAccounts(String apiKey, String merchantId, String baseUrl) throws EmptyKeyException {
         if (apiKey == null || apiKey.isEmpty() || merchantId == null || merchantId.isEmpty() || baseUrl == null || baseUrl.isEmpty()) {
@@ -23,6 +24,7 @@ public class GetPaidAccounts {
         this.merchantId = merchantId;
         this.baseUrl = baseUrl;
         this.hardner = new RequestEncrypter(apiKey);
+        gateway = new Gateway(merchantId, baseUrl);
     }
 
     public AccountResponse initiate(AccountRequest request) throws InvalidRequestObjectException {
@@ -33,7 +35,7 @@ public class GetPaidAccounts {
                 throw new InvalidRequestObjectException();
             } else {
                 request = hardner.accountAPIHardner(request);
-                response = Gateway.sendAccountInitiate(request, merchantId, baseUrl);
+                response = gateway.sendAccountInitiate(request);
                 return response;
             }
 
@@ -48,7 +50,7 @@ public class GetPaidAccounts {
                 throw new InvalidRequestObjectException();
             } else {
                 request = hardner.accountAPIHardner(request);
-                response = Gateway.sendAccountValidate(request, merchantId, baseUrl);
+                response = gateway.sendAccountValidate(request);
                 return response;
             }
 
@@ -63,7 +65,7 @@ public class GetPaidAccounts {
                 throw new InvalidRequestObjectException();
             } else {
                 request = hardner.accountAPIHardner(request);
-                response = Gateway.sendAccountCharge(request, merchantId, baseUrl);
+                response = gateway.sendAccountCharge(request);
                 return response;
             }
 

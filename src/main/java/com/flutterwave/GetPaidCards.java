@@ -13,6 +13,7 @@ public class GetPaidCards {
     private String merchantId;
     private String baseUrl;
     private RequestEncrypter requestEncrypter;
+    private Gateway gateway;
 
     public GetPaidCards(String apiKey, String merchantId, String baseUrl) throws EmptyKeyException {
         if (apiKey == null || apiKey.isEmpty() || merchantId == null || merchantId.isEmpty() || baseUrl == null || baseUrl.isEmpty()) {
@@ -22,6 +23,7 @@ public class GetPaidCards {
         this.merchantId = merchantId;
         this.baseUrl = baseUrl;
         requestEncrypter = new RequestEncrypter(this.apiKey);
+        gateway = new Gateway(merchantId, baseUrl);
     }
 
     public MVVAResponse payWithCardDetails(MvvaRequest request) throws InvalidRequestObjectException {
@@ -29,7 +31,7 @@ public class GetPaidCards {
             throw new InvalidRequestObjectException();
         }
         MvvaRequest encryptedRequest = requestEncrypter.encryptMvvaCardRequest(request);
-        MVVAResponse response = Gateway.sendPayWithCardDetailsRequest(encryptedRequest, merchantId, baseUrl);
+        MVVAResponse response = gateway.sendPayWithCardDetailsRequest(encryptedRequest);
         return response;
     }
 
@@ -38,7 +40,7 @@ public class GetPaidCards {
             throw new InvalidRequestObjectException();
         }
         MvvaRequest encryptedRequest = requestEncrypter.encryptMvvaCardRequest(request);
-        MVVAResponse response = Gateway.sendPayWithTokenRequest(encryptedRequest, merchantId, baseUrl);
+        MVVAResponse response = gateway.sendPayWithTokenRequest(encryptedRequest);
         return response;
     }
 
@@ -47,7 +49,7 @@ public class GetPaidCards {
             throw new InvalidRequestObjectException();
         }
         MvvaRequest encryptedRequest = requestEncrypter.encryptMvvaCardRequest(request);
-        MVVAResponse response = Gateway.sendValidateRequest(encryptedRequest, merchantId, baseUrl);
+        MVVAResponse response = gateway.sendValidateRequest(encryptedRequest);
         return response;
     }
 
