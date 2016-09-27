@@ -21,7 +21,7 @@ public class GetPaidCards {
         this.apiKey = apiKey;
         this.merchantId = merchantId;
         this.baseUrl = baseUrl;
-        requestEncrypter = new RequestEncrypter(apiKey);
+        requestEncrypter = new RequestEncrypter(this.apiKey);
     }
 
     public MVVAResponse payWithCardDetails(MvvaRequest request) throws InvalidRequestObjectException {
@@ -29,7 +29,7 @@ public class GetPaidCards {
             throw new InvalidRequestObjectException();
         }
         MvvaRequest encryptedRequest = requestEncrypter.encryptMvvaCardRequest(request);
-        MVVAResponse response = Gateway.sendMCD(encryptedRequest, merchantId, baseUrl);
+        MVVAResponse response = Gateway.sendPayWithCardDetailsRequest(encryptedRequest, merchantId, baseUrl);
         return response;
     }
 
@@ -38,7 +38,7 @@ public class GetPaidCards {
             throw new InvalidRequestObjectException();
         }
         MvvaRequest encryptedRequest = requestEncrypter.encryptMvvaCardRequest(request);
-        MVVAResponse response = Gateway.sendMT(encryptedRequest, merchantId, baseUrl);
+        MVVAResponse response = Gateway.sendPayWithTokenRequest(encryptedRequest, merchantId, baseUrl);
         return response;
     }
 
@@ -47,7 +47,7 @@ public class GetPaidCards {
             throw new InvalidRequestObjectException();
         }
         MvvaRequest encryptedRequest = requestEncrypter.encryptMvvaCardRequest(request);
-        MVVAResponse response = Gateway.sendVT(encryptedRequest, merchantId, baseUrl);
+        MVVAResponse response = Gateway.sendValidateRequest(encryptedRequest, merchantId, baseUrl);
         return response;
     }
 
