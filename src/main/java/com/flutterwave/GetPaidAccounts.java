@@ -29,45 +29,35 @@ public class GetPaidAccounts {
 
     public AccountResponse initiate(AccountRequest request) throws InvalidRequestObjectException {
         {
-            AccountResponse response;
-            boolean valid = AccountValidator.validate(request);
-            if (!valid) {
+            if (!AccountValidator.validate(request)) {
                 throw new InvalidRequestObjectException();
-            } else {
-                request = hardner.accountAPIHardner(request);
-                response = gateway.sendAccountInitiate(request);
-                return response;
             }
-
+            AccountRequest encryptedRequest = hardner.accountAPIHardner(request);
+            AccountResponse response = gateway.sendAccountInitiate(encryptedRequest);
+            return response;
         }
     }
 
     public AccountResponse validate(AccountRequest request) throws InvalidRequestObjectException {
         {
-            AccountResponse response;
-            boolean valid = AccountValidator.validate(request);
-            if (!valid) {
+            if (!AccountValidator.validate(request)) {
                 throw new InvalidRequestObjectException();
-            } else {
-                request = hardner.accountAPIHardner(request);
-                response = gateway.sendAccountValidate(request);
-                return response;
             }
+            AccountRequest encryptedRequest = hardner.accountAPIHardner(request);
+            AccountResponse response = gateway.sendAccountValidate(encryptedRequest);
+            return response;
 
         }
     }
 
     public AccountResponse charge(AccountRequest request) throws InvalidRequestObjectException {
         {
-            AccountResponse response;
-            boolean valid = AccountValidator.validate(request);
-            if (!valid) {
+            if (!AccountValidator.validate(request)) {
                 throw new InvalidRequestObjectException();
-            } else {
-                request = hardner.accountAPIHardner(request);
-                response = gateway.sendAccountCharge(request);
-                return response;
             }
+            AccountRequest encryptedRequest = hardner.accountAPIHardner(request);
+            AccountResponse response = gateway.sendAccountCharge(encryptedRequest);
+            return response;
 
         }
     }

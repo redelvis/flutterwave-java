@@ -29,7 +29,7 @@ public class Gateway {
     }
 
     public MVVAResponse sendPayWithCardDetailsRequest(MvvaRequest request) {
-        String url = this.baseUrl.concat("/pwc/rest/card/mvva/pay");
+        String url = this.baseUrl + "/pwc/rest/card/mvva/pay";
         JSONObject requestJSON = new JSONObject();
         requestJSON.putOpt("amount", request.getAmount());
         requestJSON.putOpt("authmodel", request.getAuthmodel());
@@ -53,7 +53,7 @@ public class Gateway {
     }
 
     public MVVAResponse sendPayWithTokenRequest(MvvaRequest request) {
-        String url = this.baseUrl.concat("/pwc/rest/card/mvva/pay");
+        String url = this.baseUrl + "/pwc/rest/card/mvva/pay";
         JSONObject requestJSON = new JSONObject();
         requestJSON.putOpt("amount", request.getAmount());
         requestJSON.putOpt("currency", request.getCurrency());
@@ -70,7 +70,7 @@ public class Gateway {
     }
 
     public MVVAResponse sendValidateRequest(MvvaRequest request) {
-        String url = this.baseUrl.concat("/pwc/rest/card/mvva/pay");
+        String url = this.baseUrl + "/pwc/rest/card/mvva/pay";
         JSONObject requestJSON = new JSONObject();
         requestJSON.putOpt("otp", request.getOtp());
         requestJSON.putOpt("otptransactionidentifier", request.getOtptransactionidentifier());
@@ -84,7 +84,7 @@ public class Gateway {
     }
 
     public AccountResponse sendAccountInitiate(AccountRequest request) {
-        String url = this.baseUrl.concat("/pwc/rest/recurrent/account");
+        String url = this.baseUrl + "/pwc/rest/recurrent/account";
         JSONObject requestJSON = new JSONObject();
         requestJSON.putOpt("accountNumber", request.getAccountNumber());
         requestJSON.putOpt("merchantid", this.merchantId);
@@ -95,7 +95,7 @@ public class Gateway {
     }
 
     public AccountResponse sendAccountValidate(AccountRequest request) {
-        String url = this.baseUrl.concat("/pwc/rest/recurrent/account/validate");
+        String url = this.baseUrl + "/pwc/rest/recurrent/account/validate";
         JSONObject requestJSON = new JSONObject();
         requestJSON.putOpt("accountNumber", request.getAccountNumber());
         requestJSON.putOpt("otp", request.getOtp());
@@ -110,7 +110,7 @@ public class Gateway {
     }
 
     public AccountResponse sendAccountCharge(AccountRequest request) {
-        String url = this.baseUrl.concat("/pwc/rest/recurrent/account/charge");
+        String url = this.baseUrl + "/pwc/rest/recurrent/account/charge";
         JSONObject requestJSON = new JSONObject();
         requestJSON.putOpt("accountToken", request.getAccountNumber());
         requestJSON.putOpt("billingamount", request.getBillingAmount());
