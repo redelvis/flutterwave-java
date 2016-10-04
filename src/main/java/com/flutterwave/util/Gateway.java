@@ -2,8 +2,10 @@ package com.flutterwave.util;
 
 import com.flutterwave.requests.AccountRequest;
 import com.flutterwave.requests.MvvaRequest;
+import com.flutterwave.requests.WithdrawalRequest;
 import com.flutterwave.response.AccountResponse;
 import com.flutterwave.response.MVVAResponse;
+import com.flutterwave.response.WithdrawalResponse;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -122,6 +124,20 @@ public class Gateway {
         return response;
     }
 
+    public WithdrawalResponse withdrawal(WithdrawalRequest request) {
+        String url = this.baseUrl + "/pwc/rest/card/mvva/withdraw/";
+        JSONObject requestJSON = new JSONObject();
+        requestJSON.putOpt("accountno", request.getAccountNumber());
+        requestJSON.putOpt("amount", request.getAmount());
+        requestJSON.putOpt("trxreference", request.getTrxReference());
+        requestJSON.putOpt("validateoption", request.getValidateOption());
+        requestJSON.putOpt("merchantid", this.merchantId);
+
+        JSONObject details = sendRequest(url, requestJSON);
+        WithdrawalResponse response = details != null ? Util.makeWithdrawalResponse(details) : null;
+        return response;
+    }
+
     private JSONObject sendRequest(String url, JSONObject requestJSON) {
         try {
             logger.log(Level.INFO, requestJSON.toString());
@@ -144,5 +160,4 @@ public class Gateway {
             throw new RuntimeException(e);
         }
     }
-
 }

@@ -2,6 +2,7 @@ package com.flutterwave.util;
 
 import com.flutterwave.response.AccountResponse;
 import com.flutterwave.response.MVVAResponse;
+import com.flutterwave.response.WithdrawalResponse;
 import org.json.JSONObject;
 
 /**
@@ -35,4 +36,10 @@ public class Util {
         return response;
     }
 
+    public static WithdrawalResponse makeWithdrawalResponse(JSONObject details) {
+        WithdrawalResponse response = new WithdrawalResponse();
+        JSONObject data = details.getJSONObject("data");
+        response.setStatus(details.optString("status"));
+        return response;
+    }
 }
