@@ -24,7 +24,7 @@ public class GetPaidAccounts {
         this.merchantId = merchantId;
         this.baseUrl = baseUrl;
         this.hardner = new RequestEncrypter(apiKey);
-        gateway = new Gateway(merchantId, baseUrl);
+        gateway = new Gateway(baseUrl);
     }
 
     public AccountResponse initiate(AccountRequest request) throws InvalidRequestObjectException {
@@ -32,7 +32,7 @@ public class GetPaidAccounts {
             if (!AccountValidator.validate(request)) {
                 throw new InvalidRequestObjectException();
             }
-            AccountRequest encryptedRequest = hardner.accountAPIHardner(request);
+            AccountRequest encryptedRequest = hardner.encryptAccountRequest(request);
             AccountResponse response = gateway.sendAccountInitiate(encryptedRequest);
             return response;
         }
@@ -43,7 +43,7 @@ public class GetPaidAccounts {
             if (!AccountValidator.validate(request)) {
                 throw new InvalidRequestObjectException();
             }
-            AccountRequest encryptedRequest = hardner.accountAPIHardner(request);
+            AccountRequest encryptedRequest = hardner.encryptAccountRequest(request);
             AccountResponse response = gateway.sendAccountValidate(encryptedRequest);
             return response;
 
@@ -55,7 +55,7 @@ public class GetPaidAccounts {
             if (!AccountValidator.validate(request)) {
                 throw new InvalidRequestObjectException();
             }
-            AccountRequest encryptedRequest = hardner.accountAPIHardner(request);
+            AccountRequest encryptedRequest = hardner.encryptAccountRequest(request);
             AccountResponse response = gateway.sendAccountCharge(encryptedRequest);
             return response;
 

@@ -1,12 +1,8 @@
 package com.flutterwave.examples;
 
-import com.flutterwave.exceptions.EmptyKeyException;
-import com.flutterwave.exceptions.InvalidRequestObjectException;
 import com.flutterwave.requests.WithdrawalRequest;
-import com.flutterwave.response.MVVAResponse;
 import com.flutterwave.response.WithdrawalResponse;
 import com.flutterwave.util.Gateway;
-import com.flutterwave.util.RequestEncrypter;
 import com.flutterwave.util.TripleDES;
 
 import java.util.logging.Level;
@@ -24,7 +20,7 @@ public class WithdrawalCardsExample {
         request.setMerchantid("lZBBPwc3kM");
 
         TripleDES requestEncrypter = new TripleDES("OqjBHslUGvv6wSViNCCB");
-        Gateway gateway = new Gateway("lZBBPwc3kM", "http://staging1flutterwave.co:8080");
+        Gateway gateway = new Gateway("http://staging1flutterwave.co:8080");
         request.setAccountNumber(requestEncrypter.encrypt(request.getAccountNumber()));
         request.setAmount(requestEncrypter.encrypt(request.getAmount()));
         request.setValidateOption(requestEncrypter.encrypt(request.getValidateOption()));

@@ -23,7 +23,7 @@ public class GetPaidCards {
         this.merchantId = merchantId;
         this.baseUrl = baseUrl;
         requestEncrypter = new RequestEncrypter(this.apiKey);
-        gateway = new Gateway(merchantId, baseUrl);
+        gateway = new Gateway(baseUrl);
     }
 
     public MVVAResponse payWithCardDetails(MvvaRequest request) throws InvalidRequestObjectException {

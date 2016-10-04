@@ -40,9 +40,9 @@ public class RequestEncrypter {
         return mvo;
     }
 
-    public AccountRequest accountAPIHardner(AccountRequest rcr) {
+    public AccountRequest encryptAccountRequest(AccountRequest rcr) {
         AccountRequest ro = new AccountRequest();
-
+        ro.setMerchantid(rcr.getMerchantid());
         ro.setAccountNumber(tripleDes.encrypt(rcr.getAccountNumber()));
         ro.setAccountToken(tripleDes.encrypt(rcr.getAccountToken()));
         ro.setBillingAmount(tripleDes.encrypt(rcr.getBillingAmount()));
